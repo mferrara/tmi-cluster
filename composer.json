@@ -9,12 +9,18 @@
       "email": "rene@preuss.io"
     }
   ],
+  "repositories": {
+    "tmi": {
+      "type": "vcs",
+      "url": "https://github.com/mferrara/tmi"
+    }
+  },
   "require": {
     "php": "^8.2",
     "ext-json": "*",
     "ext-pcntl": "*",
     "ext-posix": "*",
-    "ghostzero/tmi": "^2.1",
+    "ghostzero/tmi": "^2.4",
     "illuminate/console": "^v8.83|^9.0|^10.0|^11.0",
     "illuminate/support": "^v8.83|^9.0|^10.0|^11.0",
     "predis/predis": "^1.1",

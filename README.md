@@ -25,6 +25,18 @@ The cluster stores its data in the database and has a Redis Command Queue to sen
 - Advanced cluster status dashboard
 - Channel management and invite screen
 
+## Recent Updates (v3.5.0)
+
+### Improved IRC Race Condition Handling
+
+This version includes important updates from TMI v2.4.0 that fix critical race conditions:
+
+- **Resilient to out-of-order IRC messages**: The cluster no longer crashes when receiving NameReply messages for channels that haven't been joined yet
+- **Better reconnection handling**: Improved stability during network issues and reconnections
+- **Orphaned message tracking**: New events allow tracking of messages received for disconnected channels
+
+These improvements make the cluster much more stable at scale, especially when managing hundreds or thousands of channels.
+
 ## PHP Twitch Messaging Interface
 
 The TMI Cluster is powered by the [PHP Twitch Messaging Interface](https://github.com/ghostzero/tmi) client to communicate with Twitch. It's a full featured, high performance Twitch IRC client written in PHP 8.

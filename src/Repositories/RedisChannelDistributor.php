@@ -144,10 +144,17 @@ class RedisChannelDistributor implements SupervisorJoinHandler, ChannelDistribut
     private function reject(array $result, array $channels, array $staleIds): array
     {
         // we didn't get any server, that is ready to join our channels
-        // so we move them to our lost and found channel queue
+        // so we move them to our lost and found channel queue.
+        //
+        // The stale ids are deliberately not carried forward. They only apply to
+        // this pass: a process that really died stops pinging and is filtered out
+        // by the last_ping_at window, and a terminated process is restarted under
+        // the same uuid. joinNow() merges stale ids across every pending command,
+        // so re-queueing them let a crash loop name every live process as stale,
+        // and the join rejected and re-queued itself forever with 0 channels joined.
         $this->commandQueue->push(CommandQueue::NAME_JOIN_HANDLER, CommandQueue::COMMAND_TMI_JOIN, [
             'channels' => $channels,
-            'staleIds' => $staleIds,
+            'staleIds' => [],
         ]);
 
         $result['rejected'][] = $channels;

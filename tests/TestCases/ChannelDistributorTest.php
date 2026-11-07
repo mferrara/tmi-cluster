@@ -168,6 +168,24 @@ class ChannelDistributorTest extends TestCase
         ], $result);
     }
 
+    public function testRejectedJoinDoesNotKeepExcludingARestartedProcess(): void
+    {
+        $this->useChannelManager(DummyChannelManager::class);
+
+        // The only process is terminating: it hands its channels back and names
+        // itself as stale, so this pass has nowhere to put them.
+        $uuid = $this->createSupervisor(now(), SupervisorProcess::STATE_CONNECTED);
+        $result = $this->getChannelDistributor()->joinNow(['ghostzero'], [$uuid]);
+        self::assertEquals(['#ghostzero'], $result['rejected']);
+
+        // The cluster restarts processes under the same uuid. Once it is healthy
+        // again, the re-queued join must resolve to it rather than carry the old
+        // stale id forward and reject itself on every pass.
+        $result = $this->getChannelDistributor()->joinNow([], []);
+        self::assertEquals([], $result['rejected']);
+        self::assertEquals(['#ghostzero' => $uuid], $result['resolved']);
+    }
+
     private function getChannelDistributor(): ChannelDistributor
     {
         return app(RedisChannelDistributor::class);

@@ -103,7 +103,7 @@ class DatabaseChannelManager implements ChannelManager
 
                 if (AutoCleanup::shouldCleanup()) {
                     $staleAfter = Carbon::now()
-                        ->subHours(config('tmi-cluster.channel_manager.channel.stale', 168))
+                        ->subHours((int) config('tmi-cluster.channel_manager.channel.stale', 168))
                         ->format('Y-m-d H:i:s');
 
                     $query->orWhere('acknowledged_at', '<', $staleAfter);

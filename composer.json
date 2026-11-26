@@ -21,10 +21,10 @@
     "ext-pcntl": "*",
     "ext-posix": "*",
     "ghostzero/tmi": "^2.4",
-    "illuminate/console": "^v8.83|^9.0|^10.0|^11.0",
-    "illuminate/support": "^v8.83|^9.0|^10.0|^11.0",
-    "predis/predis": "^1.1",
-    "nesbot/carbon": "^2.62.1"
+    "illuminate/console": "^v8.83|^9.0|^10.0|^11.0|^12.0|^13.0",
+    "illuminate/support": "^v8.83|^9.0|^10.0|^11.0|^12.0|^13.0",
+    "predis/predis": "^1.1|^2.0|^3.0",
+    "nesbot/carbon": "^2.62.1|^3.0"
   },
   "require-dev": {
     "mockery/mockery": "^1.3.2",

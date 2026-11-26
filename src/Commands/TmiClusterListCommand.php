@@ -37,7 +37,7 @@ class TmiClusterListCommand extends Command
                 return [
                     $supervisor->getKey(),
                     $supervisor->getKey(),
-                    $supervisor->last_ping_at->diffInSeconds(),
+                    (int) $supervisor->last_ping_at->diffInSeconds(),
                     $supervisor->processes()->count(),
                 ];
             });
@@ -53,7 +53,7 @@ class TmiClusterListCommand extends Command
                     $this->option('uuid') ? $process->getKey() : explode('-', $process->getKey())[0],
                     $process->supervisor ? $process->supervisor->getKey() : 'N/A',
                     $process->state,
-                    $process->last_ping_at ? $process->last_ping_at->diffInSeconds() : 'N/A',
+                    $process->last_ping_at ? (int) $process->last_ping_at->diffInSeconds() : 'N/A',
                     count($process->channels),
                     $process->memory_usage,
                 ];
